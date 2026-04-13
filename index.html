@@ -1,0 +1,212 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .page { font-family: var(--font-sans); color: #ffffff; max-width: 640px; margin: 0 auto; padding: 3rem 1.5rem; background: #1E90FF; }
+  .hero { text-align: center; padding: 4rem 0 3rem; margin-bottom: 3rem; }
+  .hero-title { font-size: 30px; font-weight: 500; line-height: 1.5; margin-bottom: 1.2rem; color: #ffffff; }
+  .hero-sub { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.9; }
+  .section { margin-bottom: 3rem; text-align: center; }
+  .section-border { border-top: 0.5px solid rgba(255,255,255,0.4); margin-bottom: 2rem; }
+  .section-border-bottom { border-top: 0.5px solid rgba(255,255,255,0.4); margin-top: 2rem; }
+  .section-line { font-size: 15px; line-height: 2.1; color: rgba(255,255,255,0.9); padding: 0.2rem 0; }
+  .section-line.strong { font-weight: 500; color: #ffffff; }
+  .counter-wrap { text-align: center; padding: 2rem 0; margin-bottom: 2rem; }
+  .counter-num { font-size: 52px; font-weight: 500; color: #ffffff; display: flex; align-items: center; justify-content: center; gap: 2px; overflow: hidden; height: 68px; }
+  .digit-col { display: flex; flex-direction: column; overflow: hidden; height: 68px; }
+  .digit { height: 68px; line-height: 68px; text-align: center; min-width: 32px; transition: none; }
+  .counter-label { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 8px; }
+  .sep { font-size: 52px; font-weight: 500; line-height: 68px; }
+  .sign-btn { display: block; width: 100%; padding: 16px; font-size: 15px; font-weight: 500; background: #ffffff; border: none; border-radius: 8px; cursor: pointer; color: #1060CC; margin-bottom: 3rem; }
+  .sign-btn:hover { background: rgba(255,255,255,0.9); }
+  .modal-wrap { display: none; min-height: 420px; background: rgba(0,0,0,0.5); border-radius: 12px; align-items: center; justify-content: center; padding: 2rem; margin-bottom: 2rem; }
+  .modal-wrap.open { display: flex; }
+  .modal { background: rgba(255,255,255,0.97); border-radius: 12px; padding: 2rem; width: 100%; max-width: 380px; }
+  .modal-title { font-size: 15px; font-weight: 500; margin-bottom: 1.5rem; color: #1060CC; }
+  .canvas-wrap { border: 0.5px solid #B4B2A9; border-radius: 8px; background: white; margin-bottom: 1rem; cursor: crosshair; }
+  .modal-row { display: flex; gap: 8px; }
+  .modal-clear { flex: 1; padding: 10px; font-size: 13px; background: transparent; border: 0.5px solid #B4B2A9; border-radius: 8px; cursor: pointer; color: #5F5E5A; }
+  .modal-submit { flex: 2; padding: 10px; font-size: 13px; font-weight: 500; background: #1E90FF; border: none; border-radius: 8px; cursor: pointer; color: white; }
+  .modal-clear:hover { background: #F1EFE8; }
+  .modal-submit:hover { background: #1060CC; }
+  .done-msg { text-align: center; padding: 2rem 0; display: none; }
+  .done-sub { font-size: 16px; color: rgba(255,255,255,0.9); line-height: 2; }
+  .footer { text-align: center; padding: 2rem 0 1rem; }
+  .footer-text { font-size: 11px; letter-spacing: 2px; color: rgba(255,255,255,0.45); }
+</style>
+
+<div class="page">
+  <div class="hero">
+    <div class="hero-title">천국이 어떻게<br/>돌아가는지<br/>알고 있나요?</div>
+    <div class="hero-sub">지금 이 순간에도 누군가 밤낮없이<br/>당신의 천국을 위해 일하고 있습니다.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-border"></div>
+    <div class="section-line">우리의 천국은 늘 깨끗하고 평화롭습니다.</div>
+    <div class="section-line">그러나 이것은 저절로 유지되지 않습니다.</div>
+    <div class="section-line strong">지금 이 순간에도 누군가 밤낮없이 일하고 있습니다.</div>
+    <div class="section-line">바로 견습 천사들입니다.</div>
+    <div class="section-line">그들은 이승에서 왔습니다.</div>
+    <div class="section-line strong">착하게 살았다는 이유만으로 선택되어.</div>
+    <div class="section-line">일손이 부족할 때마다 아직 살 수 있는 이들을 데려옵니다.</div>
+    <div class="section-line strong">착할수록 더 빨리 뽑힙니다. 착한 삶이 오히려 불이익이 됩니다.</div>
+    <div class="section-line">천국에 오면 행복할 것이라 믿었을 것입니다.</div>
+    <div class="section-line strong">그러나 그들을 기다리고 있는 것은 끝없는 노동이었습니다.</div>
+    <div class="section-line">착하게 산 삶에 대한 보상이 이것이어야 합니까.</div>
+    <div class="section-border-bottom"></div>
+  </div>
+
+  <div class="counter-wrap">
+    <div class="counter-num" id="counterDisplay"></div>
+    <div class="counter-label">명이 이 상황에 반대합니다</div>
+  </div>
+
+  <button class="sign-btn" id="signBtn">서명하기</button>
+
+  <div class="modal-wrap" id="modalWrap">
+    <div class="modal">
+      <div class="modal-title">견습 천사가 더 나은 삶을 살 수 있도록<br/>지금의 상황에 반대해주세요.</div>
+      <div class="canvas-wrap">
+        <canvas id="sigCanvas" width="320" height="110"></canvas>
+      </div>
+      <div class="modal-row">
+        <button class="modal-clear" id="clearBtn">지우기</button>
+        <button class="modal-submit" id="submitBtn">서명 완료</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="done-msg" id="doneMsg">
+    <div class="done-sub">감사합니다.<br/>당신의 지지가 큰 힘이 됩니다.</div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-text">HEAVEN LABOR PROTEST</div>
+  </div>
+</div>
+
+<script>
+var count = 1247;
+
+function buildDisplay(num) {
+  var s = num.toLocaleString();
+  var el = document.getElementById('counterDisplay');
+  el.innerHTML = '';
+  for (var i = 0; i < s.length; i++) {
+    var ch = s[i];
+    if (ch === ',') {
+      var sep = document.createElement('span');
+      sep.className = 'sep';
+      sep.textContent = ',';
+      el.appendChild(sep);
+    } else {
+      // digit-col: 클리핑 박스 (overflow:hidden, block)
+      var col = document.createElement('div');
+      col.className = 'digit-col';
+      col.style.display = 'block';
+      col.style.overflow = 'hidden';
+      col.style.height = '68px';
+      // inner wrapper: 실제로 움직이는 flex 컨테이너
+      var wrapper = document.createElement('div');
+      wrapper.className = 'digit-wrapper';
+      var d = document.createElement('div');
+      d.className = 'digit';
+      d.textContent = ch;
+      wrapper.appendChild(d);
+      col.appendChild(wrapper);
+      el.appendChild(col);
+    }
+  }
+}
+
+function animateToNumber(from, to) {
+  var fromStr = from.toLocaleString().replace(/,/g, '');
+  var toStr = to.toLocaleString().replace(/,/g, '');
+  var el = document.getElementById('counterDisplay');
+
+  // 자릿수가 달라지면 전체를 다시 그림
+  if (fromStr.length !== toStr.length) {
+    buildDisplay(to);
+    return;
+  }
+
+  var digitCols = el.querySelectorAll('.digit-col');
+  var fromDigits = fromStr.split('').map(Number);
+  var toDigits = toStr.split('').map(Number);
+
+  toDigits.forEach(function(target, idx) {
+    var start = fromDigits[idx];
+    if (start === target) return; // 안 바뀐 자리는 건드리지 않음
+
+    var col = digitCols[idx];
+    var wrapper = document.createElement('div');
+    wrapper.className = 'digit-wrapper';
+    wrapper.style.display = 'flex';
+    wrapper.style.flexDirection = 'column';
+    wrapper.style.transform = 'translateY(0px)';
+    wrapper.style.transition = 'none';
+
+    // 위: 현재 숫자 (처음에 보임)
+    var dStart = document.createElement('div');
+    dStart.className = 'digit';
+    dStart.textContent = start;
+    wrapper.appendChild(dStart);
+
+    // 아래: 목표 숫자 (슬라이드 후 보임)
+    var dTarget = document.createElement('div');
+    dTarget.className = 'digit';
+    dTarget.textContent = target;
+    wrapper.appendChild(dTarget);
+
+    col.innerHTML = '';
+    col.appendChild(wrapper);
+
+    // 브라우저가 초기 상태를 렌더링한 뒤 애니메이션 시작
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        wrapper.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.3, 1)';
+        wrapper.style.transform = 'translateY(-68px)';
+      });
+    });
+  });
+}
+
+buildDisplay(count);
+
+var drawing = false;
+var canvas = document.getElementById('sigCanvas');
+var ctx = canvas.getContext('2d');
+ctx.strokeStyle = '#1E90FF';
+ctx.lineWidth = 2;
+ctx.lineCap = 'round';
+
+function getPos(e) {
+  var r = canvas.getBoundingClientRect();
+  var src = e.touches ? e.touches[0] : e;
+  return { x: src.clientX - r.left, y: src.clientY - r.top };
+}
+
+canvas.addEventListener('mousedown', function(e) { drawing = true; var p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+canvas.addEventListener('mousemove', function(e) { if (!drawing) return; var p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+canvas.addEventListener('mouseup', function() { drawing = false; });
+canvas.addEventListener('touchstart', function(e) { e.preventDefault(); drawing = true; var p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+canvas.addEventListener('touchmove', function(e) { e.preventDefault(); if (!drawing) return; var p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+canvas.addEventListener('touchend', function() { drawing = false; });
+
+document.getElementById('signBtn').addEventListener('click', function() {
+  document.getElementById('modalWrap').classList.add('open');
+});
+
+document.getElementById('clearBtn').addEventListener('click', function() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+document.getElementById('submitBtn').addEventListener('click', function() {
+  var prev = count;
+  count++;
+  document.getElementById('modalWrap').classList.remove('open');
+  document.getElementById('signBtn').style.display = 'none';
+  document.getElementById('doneMsg').style.display = 'block';
+  animateToNumber(prev, count);
+});
+</script>
